@@ -26,6 +26,7 @@ class MarkdownSlideshowCommand(sublime_plugin.TextCommand):
         settings = sublime.load_settings('MarkdownSlideshow.sublime-settings')
         themes = settings.get('themes', None)
         theme = settings.get('theme', 'io2012')
+        theme = settings.get('theme_processor', 'io2012')
         extensions = settings.get('extensions', [])
         output_file = settings.get('output_file', None)
         clean = settings.get('clean', False)
@@ -36,6 +37,7 @@ class MarkdownSlideshowCommand(sublime_plugin.TextCommand):
         opts = {
             'themes': themes,
             'theme': theme,
+            'theme_processor': theme_processor,
             'contents': self.view.substr(sublime.Region(0, self.view.size())),
             'extensions': extensions,
             'clean': clean
