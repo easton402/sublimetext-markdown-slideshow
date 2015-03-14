@@ -34,6 +34,9 @@ $ git clone git://github.com/ogom/sublimetext-markdown-slideshow.git
   // Theme of the slide. (io2012, io2011, ...)
   "theme" : "io2012",
 
+  // Theme of the slide. (io2012, io2011, ...)
+  "theme_processor" : "io2012",
+
   // Provided to expand the base syntax. (extra, fenced_code, tables, ...)
   "extensions": [],
 

@@ -21,6 +21,7 @@ class Slide():
     """ opts
         .themes themes path
         .theme io2012(default) or io2011
+        .theme_processor io2012(default) or io2011
         .contents
         .extensions extra fenced_code tables, ...
         .clean (boolean, default False)
@@ -31,6 +32,8 @@ class Slide():
             raise KeyError('themes')
         if 'theme' not in self.options:
             self.options['theme'] = 'io2012'
+        if 'theme_processor' not in self.options:
+            self.options['theme_processor'] = self.options['theme']
         if 'contents' not in self.options:
             self.options['contents'] = None
         if 'extensions' not in self.options:
@@ -44,7 +47,7 @@ class Slide():
     def maker(self, output_path=None):
         theme_path = os.path.abspath(os.path.join(self.options['themes'], self.options['theme']))
         template = self._get_template(output_path, theme_path, self.options['clean'])
-        slide = self._get_slide(self.options['theme'], self.options['contents'], self.options['extensions'])
+        slide = self._get_slide(self.options['theme'], self.options['theme_processor'], self.options['contents'], self.options['extensions'])
         return template.replace('{{ slide }}', slide)
 
     def _get_template(self, output_path=None, theme_path=None, clean=False):
@@ -60,11 +63,11 @@ class Slide():
                     shutil.copytree(src_path, dst_path)
         return util.fs_reader(os.path.join(theme_path, 'base.html'))
 
-    def _get_slide(self, theme=None, contents=None, extensions=[]):
+    def _get_slide(self, theme=None, theme_processor=None, contents=None, extensions=[]):
         html = None
-        if theme == 'io2011':
+        if theme_processor == 'io2011':
             html = self._get_slide_io2011(contents, extensions)
-        elif theme == 'io2012':
+        elif theme_processor == 'io2012':
             html = self._get_slide_io2012(contents, extensions)
         else:
             html = self._get_slide_none(contents, extensions)
